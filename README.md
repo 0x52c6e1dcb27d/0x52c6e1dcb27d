@@ -1,16 +1,1085 @@
-### Hi there 👋
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>منصة أسهم الخليج · دخول</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            transition: background-color 0.3s ease, color 0.2s ease, border-color 0.2s ease;
+        }
 
-<!--
-**0x52c6e1dcb27d/0x52c6e1dcb27d** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+        /* صفحة تسجيل الدخول الملكية */
+        .login-screen {
+            position: fixed;
+            inset: 0;
+            background: #0b0e11;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 30000;
+            padding: 20px;
+        }
+        
+        .login-card {
+            background: #1e2329;
+            border: 2px solid #fcd535;
+            border-radius: 48px;
+            padding: 40px 30px;
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 25px 50px #00000080, 0 0 0 2px #fcd53520 inset;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .login-icon {
+            width: 80px;
+            height: 80px;
+            background: #fcd535;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            margin: 0 auto 20px;
+            color: #0b0e11;
+            box-shadow: 0 10px 30px #fcd53560;
+        }
+        
+        .login-card h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #fcd535;
+        }
+        
+        .login-card p {
+            color: #848e9c;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .login-field {
+            margin-bottom: 25px;
+            text-align: right;
+        }
+        
+        .login-field label {
+            display: block;
+            margin-bottom: 8px;
+            color: #fcd535;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .login-field input {
+            width: 100%;
+            background: #2b3139;
+            border: 2px solid #3b424d;
+            border-radius: 20px;
+            padding: 18px 20px;
+            color: white;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+        
+        .login-field input:focus {
+            border-color: #fcd535;
+            outline: none;
+            box-shadow: 0 0 0 3px #fcd53530;
+        }
+        
+        .login-btn {
+            background: linear-gradient(145deg, #fcd535, #e6b800);
+            color: #0b0e11;
+            border: none;
+            border-radius: 40px;
+            padding: 20px;
+            font-weight: 900;
+            font-size: 20px;
+            width: 100%;
+            margin: 20px 0 10px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px #fcd53560;
+            transition: 0.3s;
+        }
+        
+        .login-btn:hover {
+            transform: scale(1.02);
+        }
+        
+        .login-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .hidden {
+            display: none !important;
+        }
 
-Here are some ideas to get you started:
+        /* الوضع الفاتح */
+        body.light-mode {
+            background: #f5f7fa;
+            color: #1e2329;
+        }
+        
+        body.light-mode .stat-card,
+        body.light-mode .balance-banner,
+        body.light-mode .stock-item,
+        body.light-mode .bank-card,
+        body.light-mode .toast,
+        body.light-mode .modal-content {
+            background: #ffffff;
+            border-color: #d0d5dd;
+            color: #1e2329;
+        }
+        
+        body.light-mode .stat-label,
+        body.light-mode .stock-code,
+        body.light-mode .footer {
+            color: #5e6873;
+        }
+        
+        body.light-mode .badge {
+            background: #00c07620;
+            color: #00c076;
+            border-color: #00c07640;
+        }
+        
+        body.light-mode .bank-icon {
+            background: #f0f2f5;
+            border-color: #d0d5dd;
+        }
+        
+        body.light-mode .greeting p {
+            color: #5e6873;
+        }
+        
+        body.light-mode .icons i {
+            color: #5e6873;
+        }
+        
+        body.light-mode .withdraw-king-btn {
+            box-shadow: 0 10px 40px #fcd53580;
+        }
+        
+        body.light-mode .modal select,
+        body.light-mode .modal input {
+            background: #f0f2f5;
+            border-color: #d0d5dd;
+            color: #1e2329;
+        }
+        
+        body {
+            background: #0b0e11;
+            color: #fff;
+            min-height: 100vh;
+            padding: 16px 12px 80px;
+            position: relative;
+        }
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+        /* إشعارات حية مستمرة */
+        .toast-container {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            pointer-events: none;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .toast {
+            background: #1e2329;
+            border-right: 5px solid #00c076;
+            border-radius: 16px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 10px 30px #00000080;
+            backdrop-filter: blur(10px);
+            animation: slideIn 0.4s ease;
+            font-size: 14px;
+        }
+
+        .toast.withdraw { border-right-color: #fcd535; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* الهيدر العلوي */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0 16px;
+        }
+
+        .logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: #fcd535;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0b0e11;
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .icons i {
+            margin: 0 8px;
+            color: #848e9c;
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .icons i:hover {
+            transform: scale(1.1);
+        }
+        
+        .icons i:active {
+            transform: scale(0.95);
+        }
+
+        /* ترحيب */
+        .greeting h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 20px 0 4px;
+        }
+        .greeting p {
+            color: #848e9c;
+            font-size: 14px;
+        }
+
+        /* بطاقة الإحصائيات */
+        .stats-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .stat-card {
+            background: #1e2329;
+            border-radius: 24px;
+            padding: 20px 16px;
+            border: 1px solid #2b3139;
+            position: relative;
+        }
+
+        .stat-label {
+            color: #848e9c;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 26px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .green { color: #00c076; }
+        .badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: #00c07620;
+            color: #00c076;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 600;
+            border: 1px solid #00c07640;
+        }
+
+        /* بطاقة الرصيد */
+        .balance-banner {
+            background: linear-gradient(145deg, #1e2329, #161a1e);
+            border: 2px solid #fcd53530;
+            border-radius: 32px;
+            padding: 24px;
+            margin: 20px 0 28px;
+            text-align: center;
+            box-shadow: 0 15px 30px #00000060;
+        }
+
+        .balance-banner .small {
+            color: #fcd535;
+            font-size: 15px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .balance-banner .big {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #fcd535);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        /* قائمة الأسهم الحية */
+        .market-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 24px 0 12px;
+        }
+        .market-title h3 {
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .live-badge {
+            background: #f03a3a;
+            font-size: 10px;
+            padding: 4px 10px;
+            border-radius: 40px;
+            animation: blink 1s infinite;
+            color: white;
+        }
+        @keyframes blink { 50% { opacity: 0.5; } }
+
+        .stock-item {
+            background: #1e2329;
+            border-radius: 24px;
+            padding: 18px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #2b3139;
+            transition: 0.2s;
+        }
+        .stock-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .stock-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .stock-code {
+            color: #848e9c;
+            font-size: 12px;
+        }
+        .stock-price {
+            text-align: left;
+        }
+        .current-price {
+            font-size: 22px;
+            font-weight: 800;
+            direction: ltr;
+        }
+        .price-change {
+            font-size: 13px;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            justify-content: flex-end;
+        }
+        .up { color: #00c076; }
+        .down { color: #ff3b30; }
+
+        /* قسم البنوك المتحركة */
+        .bank-section {
+            margin: 30px 0 20px;
+            padding: 20px 0;
+            border-top: 1px solid #2b3139;
+            border-bottom: 1px solid #2b3139;
+        }
+
+        .bank-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            color: #fcd535;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .bank-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .bank-card {
+            background: #1e2329;
+            border: 1px solid #2b3139;
+            border-radius: 24px;
+            padding: 18px 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .bank-card:hover {
+            border-color: #fcd535;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px #fcd53520;
+        }
+
+        .bank-icon {
+            width: 48px;
+            height: 48px;
+            background: #0b0e11;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            border: 1px solid #3b424d;
+        }
+
+        .bank-name {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .bank-btn {
+            background: #fcd535;
+            color: #0b0e11;
+            border: none;
+            border-radius: 40px;
+            padding: 10px 16px;
+            font-weight: 700;
+            font-size: 12px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        /* زر سحب الأرباح الملكي */
+        .withdraw-king-btn {
+            background: linear-gradient(145deg, #fcd535, #e6b800);
+            color: #0b0e11;
+            border: none;
+            border-radius: 60px;
+            padding: 22px;
+            font-weight: 900;
+            font-size: 22px;
+            width: 100%;
+            margin: 30px 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            box-shadow: 0 10px 40px #fcd53560;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .withdraw-king-btn:active { transform: scale(0.98); }
+
+        /* مودال السحب */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #000000e0;
+            backdrop-filter: blur(12px);
+            z-index: 20000;
+            align-items: flex-end;
+        }
+
+        .modal-content {
+            background: #1e2329;
+            width: 100%;
+            border-radius: 40px 40px 0 0;
+            padding: 32px 20px;
+            border-top: 4px solid #fcd535;
+        }
+
+        .modal h3 {
+            text-align: center;
+            margin-bottom: 24px;
+            font-size: 22px;
+        }
+
+        .modal label {
+            color: #848e9c;
+            font-size: 13px;
+            margin: 16px 0 6px;
+            display: block;
+        }
+
+        .modal select, .modal input {
+            width: 100%;
+            background: #2b3139;
+            border: 1px solid #3b424d;
+            border-radius: 18px;
+            padding: 16px 20px;
+            color: white;
+            font-size: 15px;
+        }
+
+        .modal button {
+            margin-top: 20px;
+        }
+
+        .hidden { display: none; }
+
+        .footer {
+            text-align: center;
+            color: #5e6873;
+            font-size: 11px;
+            margin-top: 40px;
+        }
+        
+        /* رسالة المسؤول */
+        .admin-note {
+            background: rgba(252, 213, 53, 0.1);
+            border: 1px dashed #fcd535;
+            border-radius: 16px;
+            padding: 16px;
+            margin: 20px 0 10px;
+            text-align: center;
+            color: #fcd535;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .admin-note span {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        /* تأثير زيادة/نقصان الرصيد */
+        @keyframes balanceFlash {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); text-shadow: 0 0 20px #fcd535; }
+            100% { transform: scale(1); }
+        }
+        
+        .balance-update {
+            animation: balanceFlash 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+
+<!-- صفحة تسجيل الدخول الملكية 👑 -->
+<div class="login-screen" id="loginScreen">
+    <div class="login-card">
+        <div class="login-icon">🏛</div>
+        <h1>منصة أسهم الخليج</h1>
+        <p>تسجيل الدخول للمحفظة الملكية</p>
+        
+        <div class="login-field">
+            <label>👤 الاسم الكريم</label>
+            <input type="text" id="loginName" placeholder="أدخل اسمك الثلاثي" autocomplete="off">
+        </div>
+        
+        <div class="login-field">
+            <label>🔢 رقم حسابك البنكي</label>
+            <input type="text" id="loginAccount" placeholder="مثال: SA03 8000 0000 6080 1016 7519">
+        </div>
+        
+        <div class="login-field">
+            <label>💰 أرباحك الحالية (ر.س)</label>
+            <input type="number" id="loginProfit" placeholder="أدخل قيمة أرباحك" value="137000">
+        </div>
+        
+        <button class="login-btn" onclick="processLogin()">
+            <span>✓</span> تأكيد طلبك الملكي
+        </button>
+        
+        <div style="color: #848e9c; font-size: 12px; margin-top: 20px;">
+            <span>🔐 جميع البيانات محمية</span>
+        </div>
+    </div>
+</div>
+
+<!-- الصفحة الرئيسية (تظهر بعد تسجيل الدخول) -->
+<div id="mainApp" class="hidden">
+    <!-- إشعارات حية مستمرة -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- الهيدر -->
+    <div class="header">
+        <div class="logo-wrap">
+            <div class="logo-icon">🏛</div>
+            <div>
+                <div style="font-weight: 700; font-size: 16px;">منصة أسهم الخليج</div>
+                <div style="color: #848e9c; font-size: 10px;">1270.0.1.8000</div>
+            </div>
+        </div>
+        <div class="icons">
+            <i>⚙️</i><i>🔔</i>
+            <!-- شمس تغيير الوضع -->
+            <i id="themeToggle" onclick="toggleTheme()">☀️</i>
+        </div>
+    </div>
+
+    <!-- الترحيب (يتغير حسب الاسم المدخل) -->
+    <div class="greeting">
+        <h2 id="welcomeName">مرحباً</h2>
+        <p id="welcomeAccount">حسابك الخاص في شركة أسهم الخليج</p>
+    </div>
+
+    <!-- بطاقات الإحصائيات -->
+    <div class="stats-row">
+        <div class="stat-card">
+            <span class="badge">نشط</span>
+            <div class="stat-label">مبلغ الاستثمار</div>
+            <div class="stat-value" id="investAmount">1,500 <span style="font-size: 14px;">ر.س</span></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label green">الأرباح</div>
+            <div class="stat-value green" id="profitAmount">0 <span style="font-size: 14px;">ر.س</span></div>
+            <div style="color: #00c076; font-size: 12px; margin-top: 6px;" id="profitPercentage">+0%</div>
+        </div>
+    </div>
+
+    <!-- بطاقة الرصيد الإجمالي الملكية -->
+    <div class="balance-banner">
+        <div class="small">💰 إجمالي الرصيد القابل للسحب</div>
+        <div class="big" id="totalBalance">0 <span style="font-size: 22px; background: none; -webkit-text-fill-color: #fcd535;">ر.س</span></div>
+        <div style="color: #5e6873; margin-top: 12px;">آخر تحديث: الآن</div>
+    </div>
+
+    <!-- قائمة الأسهم الحية المتحركة -->
+    <div class="market-title">
+        <h3><span>🇸🇦</span> الأسهم السعودية - بث مباشر <span class="live-badge">● مباشر</span></h3>
+        <span style="color: #fcd535;">محدث لحظياً</span>
+    </div>
+
+    <div id="stocksContainer"></div>
+
+    <!-- قسم البنوك الملكية في الواجهة الأمامية -->
+    <div class="bank-section">
+        <div class="bank-header">
+            <span style="font-size: 26px;">🏦</span>
+            <span>التحويل البنكي الفوري لجميع بنوك الخليج</span>
+        </div>
+        <div class="bank-grid" id="bankGrid"></div>
+    </div>
+
+    <!-- زر سحب الأرباح الملكي -->
+    <button class="withdraw-king-btn" onclick="openWithdrawModal()">
+        <span>↑</span> سحب الأرباح الملكي <span>👑</span>
+    </button>
+
+    <!-- مودال السحب (بنك / كريبتو) -->
+    <div class="modal" id="withdrawModal">
+        <div class="modal-content">
+            <div style="width: 60px; height: 5px; background: #3b424d; border-radius: 10px; margin: 0 auto 20px;"></div>
+            <h3>👑 مركز السحب الملكي</h3>
+
+            <!-- رسالة المسؤول - العنوان الخاص -->
+            <div class="admin-note">
+                <span>🔐</span>
+                يرجى إدخال العنوان الذي حصلت عليه من المسؤول
+            </div>
+
+            <label>اختر وسيلة السحب</label>
+            <select id="withdrawMethod" onchange="toggleWithdrawFields()">
+                <option value="bank">🏦 تحويل بنكي (جميع البنوك)</option>
+                <option value="binance">₿ باينانس (USDT - TRC20)</option>
+            </select>
+
+            <div id="bankFields">
+                <label>اختر البنك الذي تريد</label>
+                <select id="bankSelect">
+                    <optgroup label="🇸🇦 السعودية">
+                        <option>البنك الأهلي السعودي</option>
+                        <option>مصرف الراجحي</option>
+                        <option>مصرف الإنماء</option>
+                        <option>بنك الرياض</option>
+                        <option>بنك الجزيرة</option>
+                    </optgroup>
+                    <optgroup label="🇦🇪 الإمارات">
+                        <option>بنك أبوظبي الأول</option>
+                        <option>بنك الإمارات دبي الوطني</option>
+                    </optgroup>
+                    <optgroup label="🇰🇼 الكويت">
+                        <option>بنك الكويت الوطني</option>
+                    </optgroup>
+                    <optgroup label="🇶🇦 قطر">
+                        <option>بنك قطر الوطني</option>
+                    </optgroup>
+                    <optgroup label="🇴🇲 عمان">
+                        <option>بنك مسقط</option>
+                    </optgroup>
+                    <optgroup label="🇧🇭 البحرين">
+                        <option>بنك البحرين الوطني</option>
+                    </optgroup>
+                </select>
+                <label>🔑 العنوان الذي حصلت عليه من المسؤول</label>
+                <input type="text" id="bankAccountInput" placeholder="أدخل العنوان المخصص من المسؤول">
+            </div>
+
+            <div id="binanceFields" class="hidden">
+                <label>🔑 العنوان الذي حصلت عليه من المسؤول (USDT - TRC20)</label>
+                <input type="text" id="cryptoAddress" placeholder="أدخل العنوان المخصص من المسؤول">
+            </div>
+
+            <label>المبلغ (ر.س)</label>
+            <input type="number" id="withdrawAmount" value="" readonly>
+
+            <button class="withdraw-king-btn" style="margin: 20px 0 10px;" onclick="processWithdraw()">تأكيد السحب الملكي</button>
+            <button class="withdraw-king-btn" style="background: transparent; color: #848e9c;" onclick="closeWithdrawModal()">إلغاء</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <span>© 2026 شركة أسهم الخليج · جميع حقوق التداول محفوظة · منصة معتمدة</span>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ------------------------------------------------------------
+        // 0. نظام تسجيل الدخول الملكي - اليدخل الأرباح يدوياً
+        // ------------------------------------------------------------
+        window.processLogin = function() {
+            const name = document.getElementById('loginName').value.trim();
+            const account = document.getElementById('loginAccount').value.trim();
+            const profitInput = document.getElementById('loginProfit').value.trim();
+            
+            if (!name) {
+                alert('👑 يرجى إدخال الاسم الكريم');
+                return;
+            }
+            
+            if (!account) {
+                alert('👑 يرجى إدخال رقم حسابك البنكي');
+                return;
+            }
+            
+            if (!profitInput) {
+                alert('👑 يرجى إدخال قيمة أرباحك');
+                return;
+            }
+            
+            // تحويل الأرباح إلى رقم
+            const profitNum = parseFloat(profitInput) || 0;
+            
+            // تحديث اسم المستخدم في الصفحة الرئيسية
+            document.getElementById('welcomeName').textContent = `مرحباً، ${name}`;
+            document.getElementById('welcomeAccount').innerHTML = `حسابك: ${account} · شركة أسهم الخليج`;
+            
+            // تحديث الأرباح (اللي المستخدم دخلها)
+            document.getElementById('profitAmount').innerHTML = profitNum.toLocaleString() + ' <span style="font-size: 14px;">ر.س</span>';
+            
+            // إجمالي الرصيد = استثمار + أرباح
+            const invest = 1500;
+            const total = invest + profitNum;
+            document.getElementById('totalBalance').innerHTML = total.toLocaleString() + ' <span style="font-size: 22px; background: none; -webkit-text-fill-color: #fcd535;">ر.س</span>';
+            
+            // نسبة الأرباح
+            const percent = ((profitNum / invest) * 100).toFixed(1);
+            document.getElementById('profitPercentage').textContent = `+${percent}%`;
+            
+            // تحديث مبلغ السحب (يظهر الأرباح اللي دخلها المستخدم)
+            document.getElementById('withdrawAmount').value = profitNum;
+            
+            // رسالة تأكيد
+            alert(`✅ تم تأكيد طلبك الملكي\n\nمرحباً بك ${name}\nرقم حسابك: ${account}\nأرباحك: ${profitNum.toLocaleString()} ر.س`);
+            
+            // إخفاء شاشة الدخول وإظهار التطبيق
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('mainApp').classList.remove('hidden');
+            
+            // تحديث المتغيرات
+            currentBalance = total;
+            currentProfit = profitNum;
+            currentInvest = invest;
+            userProfit = profitNum;
+            
+            // حفظ البيانات للتحديثات
+            userAccount = account;
+            userName = name;
+        };
+
+        // ------------------------------------------------------------
+        // المتغيرات العامة
+        // ------------------------------------------------------------
+        let currentBalance = 1500;
+        let currentProfit = 0;
+        let currentInvest = 1500;
+        let userProfit = 0;
+        let userAccount = '';
+        let userName = '';
+
+        function updateDisplayedBalances() {
+            document.getElementById('totalBalance').innerHTML = currentBalance.toLocaleString() + ' <span style="font-size: 22px; background: none; -webkit-text-fill-color: #fcd535;">ر.س</span>';
+            document.getElementById('profitAmount').innerHTML = currentProfit.toLocaleString() + ' <span style="font-size: 14px;">ر.س</span>';
+            document.getElementById('investAmount').innerHTML = currentInvest.toLocaleString() + ' <span style="font-size: 14px;">ر.س</span>';
+            
+            const profitPercent = ((currentProfit / currentInvest) * 100).toFixed(1);
+            document.getElementById('profitPercentage').textContent = `+${profitPercent}%`;
+        }
+
+        // ------------------------------------------------------------
+        // 1. بيانات الأسهم + تحديثات حية
+        // ------------------------------------------------------------
+        const stocks = [
+            { name: 'أرامكو السعودية', code: '2222', price: 30.87, change: 1.24, up: true },
+            { name: 'الراجحي', code: '1120', price: 82.01, change: 0.93, up: false },
+            { name: 'الإنماء', code: '2180', price: 25.43, change: 2.15, up: true },
+            { name: 'الرياض', code: '4080', price: 33.12, change: 0.76, up: true },
+            { name: 'الاتصالات', code: '7010', price: 112.50, change: 1.82, up: false },
+            { name: 'سابك', code: '2010', price: 94.30, change: 0.24, up: true }
+        ];
+
+        function renderStocks() {
+            const container = document.getElementById('stocksContainer');
+            if (!container) return;
+            container.innerHTML = stocks.map(s => `
+                <div class="stock-item">
+                    <div class="stock-info">
+                        <span class="stock-name">${s.name}</span>
+                        <span class="stock-code">${s.code}</span>
+                    </div>
+                    <div class="stock-price">
+                        <div class="current-price">${s.price.toFixed(2)} <span style="font-size: 14px; color: #848e9c;">ر.س</span></div>
+                        <div class="price-change ${s.up ? 'up' : 'down'}">
+                            <span>${s.up ? '▲' : '▼'}</span>
+                            <span>${s.change.toFixed(2)}%</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateStocks() {
+            stocks.forEach(s => {
+                const movement = (Math.random() * 0.4) - 0.2;
+                s.price = +(s.price + movement).toFixed(2);
+                if (s.price < 10) s.price = 10 + Math.random() * 5;
+                const changeRaw = (Math.random() * 3) - 1.5;
+                s.change = Math.abs(changeRaw);
+                s.up = changeRaw > 0;
+            });
+            renderStocks();
+        }
+
+        renderStocks();
+        setInterval(updateStocks, 4000);
+
+        // ------------------------------------------------------------
+        // 2. الإشعارات الحية بأسماء عشوائية
+        // ------------------------------------------------------------
+        const names = [
+            'فهد العتيبي', 'نورة الدوسري', 'سلطان القحطاني', 
+            'عبدالله الشمري', 'زايد المنصوري', 'حمد الكواري',
+            'سارة الفهد', 'مشعل العنزي', 'ريم السبيعي', 'بدر المطيري'
+        ];
+        
+        const actions = [
+            { text: 'تم إيداع', type: 'deposit' }, 
+            { text: 'تم سحب أرباح', type: 'withdraw' }
+        ];
+        
+        function randomToast() {
+            // ما نعرض إشعارات إلا بعد تسجيل الدخول
+            if (document.getElementById('loginScreen').classList.contains('hidden') === false) return;
+            
+            const name = names[Math.floor(Math.random() * names.length)];
+            const actionObj = actions[Math.floor(Math.random() * actions.length)];
+            const amount = Math.floor(Math.random() * 5000) + 1000;
+            
+            const type = actionObj.type;
+            const actionText = actionObj.text;
+            
+            const balanceEl = document.getElementById('totalBalance');
+            
+            if (type === 'deposit') {
+                currentBalance += amount;
+                currentProfit += amount;
+                updateDisplayedBalances();
+                
+                balanceEl.classList.add('balance-update');
+                setTimeout(() => balanceEl.classList.remove('balance-update'), 500);
+                
+            } else {
+                if (currentBalance > amount) {
+                    currentBalance -= amount;
+                    currentProfit -= amount;
+                    updateDisplayedBalances();
+                    
+                    balanceEl.classList.add('balance-update');
+                    setTimeout(() => balanceEl.classList.remove('balance-update'), 500);
+                } else {
+                    return;
+                }
+            }
+
+            const toast = document.createElement('div');
+            toast.className = `toast ${type === 'withdraw' ? 'withdraw' : ''}`;
+            toast.innerHTML = `
+                <span style="font-size: 24px;">${type === 'deposit' ? '💰' : '💸'}</span>
+                <div><strong>${name}</strong> ${actionText} <b>${amount.toLocaleString()} ر.س</b></div>
+            `;
+            document.getElementById('toastContainer').appendChild(toast);
+            setTimeout(() => toast.remove(), 4500);
+        }
+        
+        setInterval(randomToast, 7000);
+        setTimeout(randomToast, 1000);
+
+        // ------------------------------------------------------------
+        // 3. شبكة البنوك الكبرى
+        // ------------------------------------------------------------
+        const banks = [
+            { name: 'الأهلي', icon: '🇸🇦', country: 'السعودية' },
+            { name: 'الراجحي', icon: '🏦', country: 'السعودية' },
+            { name: 'الإنماء', icon: '💳', country: 'السعودية' },
+            { name: 'أبوظبي الأول', icon: '🇦🇪', country: 'الإمارات' },
+            { name: 'الكويت الوطني', icon: '🇰🇼', country: 'الكويت' },
+            { name: 'قطر الوطني', icon: '🇶🇦', country: 'قطر' },
+            { name: 'بنك مسقط', icon: '🇴🇲', country: 'عُمان' },
+            { name: 'البحرين الوطني', icon: '🇧🇭', country: 'البحرين' },
+            { name: 'بنك الدوحة', icon: '🇶🇦', country: 'قطر' }
+        ];
+        
+        document.getElementById('bankGrid').innerHTML = banks.map(b => `
+            <div class="bank-card" onclick="quickBank('${b.name}')">
+                <div class="bank-icon">${b.icon}</div>
+                <span class="bank-name">${b.name}</span>
+                <button class="bank-btn" onclick="event.stopPropagation(); quickBank('${b.name}')">سحب</button>
+            </div>
+        `).join('');
+
+        window.quickBank = (bankName) => {
+            openWithdrawModal();
+        };
+
+        // ------------------------------------------------------------
+        // 4. نظام الثيم (ليلي/نهاري)
+        // ------------------------------------------------------------
+        window.toggleTheme = function() {
+            const body = document.body;
+            const themeIcon = document.getElementById('themeToggle');
+            
+            if (body.classList.contains('light-mode')) {
+                body.classList.remove('light-mode');
+                themeIcon.textContent = '☀️';
+                themeIcon.style.color = '#848e9c';
+            } else {
+                body.classList.add('light-mode');
+                themeIcon.textContent = '🌙';
+                themeIcon.style.color = '#fcd535';
+            }
+        };
+
+        // ------------------------------------------------------------
+        // 5. مودال السحب الملكي - الأرباح تظهر من اللي المستخدم دخلها
+        // ------------------------------------------------------------
+        window.openWithdrawModal = () => {
+            document.getElementById('withdrawModal').style.display = 'flex';
+            toggleWithdrawFields();
+            
+            document.getElementById('bankAccountInput').value = '';
+            document.getElementById('cryptoAddress').value = '';
+        };
+        
+        window.closeWithdrawModal = () => {
+            document.getElementById('withdrawModal').style.display = 'none';
+        };
+        
+        window.toggleWithdrawFields = () => {
+            const method = document.getElementById('withdrawMethod').value;
+            document.getElementById('bankFields').classList.toggle('hidden', method !== 'bank');
+            document.getElementById('binanceFields').classList.toggle('hidden', method !== 'binance');
+        };
+        
+        window.processWithdraw = () => {
+            const method = document.getElementById('withdrawMethod').value;
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+
+            if (method === 'bank') {
+                const adminAddress = document.getElementById('bankAccountInput').value.trim();
+                if (!adminAddress) {
+                    alert('❌ يرجى إدخال العنوان الذي حصلت عليه من المسؤول');
+                    return;
+                }
+                
+                if (currentBalance >= amount) {
+                    currentBalance -= amount;
+                    currentProfit -= amount;
+                    updateDisplayedBalances();
+                    
+                    const balanceEl = document.getElementById('totalBalance');
+                    balanceEl.classList.add('balance-update');
+                    setTimeout(() => balanceEl.classList.remove('balance-update'), 500);
+                    
+                    alert(`✅ تم تحويل المبلغ: ${amount.toLocaleString()} ر.س بنجاح إلى الحساب:\n${adminAddress}\n\n💰 الرصيد المتبقي: ${currentBalance.toLocaleString()} ر.س`);
+                    
+                    window.location.href = 'https://www.alrajhibank.com.sa/ar/personal';
+                } else {
+                    alert('❌ الرصيد غير كافي');
+                }
+                
+            } else {
+                const adminAddress = document.getElementById('cryptoAddress').value.trim();
+                if (!adminAddress) {
+                    alert('❌ يرجى إدخال العنوان الذي حصلت عليه من المسؤول');
+                    return;
+                }
+                
+                if (currentBalance >= amount) {
+                    currentBalance -= amount;
+                    currentProfit -= amount;
+                    updateDisplayedBalances();
+                    
+                    const balanceEl = document.getElementById('totalBalance');
+                    balanceEl.classList.add('balance-update');
+                    setTimeout(() => balanceEl.classList.remove('balance-update'), 500);
+                    
+                    alert(`✅ تم تحويل المبلغ: ${amount.toLocaleString()} ر.س بنجاح إلى المحفظة:\n${adminAddress}\n\n💰 الرصيد المتبقي: ${currentBalance.toLocaleString()} ر.س`);
+                    
+                    navigator.clipboard?.writeText(adminAddress).catch(() => {});
+                    window.location.href = 'https://app.binance.com/ar/my/wallet/withdrawal/crypto';
+                } else {
+                    alert('❌ الرصيد غير كافي');
+                }
+            }
+        };
+
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) closeWithdrawModal();
+        });
+    })();
+</script>
+</body>
+</html>
